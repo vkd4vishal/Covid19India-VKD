@@ -1,0 +1,77 @@
+<h3>{{totalConfirmed}}</h3>
+<table>
+    <thead>
+        <tr>
+            <td>States/UT</td>
+            <td>Confirmed</td>
+            <td>Active</td>
+            <td>Deaths</td>
+            <td>Recovered</td>
+            <td>Tested</td>
+        </tr>
+        <tr>
+            <td>Total</td>
+            <td>{{totalConfirmed}}</td>
+            <td> {{totalActive}}</td>
+            <td>{{totalDeath}}</td>
+            <td>{{totalRecovered}}</td>
+            <td>{{totalTested}}</td>
+        </tr>
+
+    </thead>
+    <tbody *ngFor='let state of stateCode '>
+        <tr>
+            <td (click)="toggle(state.code);">{{state.name}}</td>
+            <td>
+                <div>{{stateCases.get(state.code).c}}</div>
+            </td>
+            <td>
+                <div>{{stateCases.get(state.code).a}}</div>
+            </td>
+            <td>
+                <div>{{stateCases.get(state.code).d}}</div>
+            </td>
+            <td>
+                <div>{{stateCases.get(state.code).r}}</div>
+            </td>
+            <td>
+                <div>{{stateCases.get(state.code).t}}</div>
+            </td>
+            
+        </tr>
+        <tr>
+            <table *ngIf="kaun(state.code);">
+                <thead>
+                    <tr>
+                        <td>District</td>
+                        <td>Confirmed</td>
+                        <td>Active</td>
+                        <td>Deaths</td>
+                        <td>Recovered</td>
+                        <td>Tested</td>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let district of districtCases.get(state.code)" >
+                    <tr>
+                        <td>{{district.name}}</td>
+                        <td>
+                            <div>{{district.c}}</div>
+                        </td>
+                        <td>
+                            <div>{{district.a}}</div>
+                        </td>
+                        <td>
+                            <div>{{district.d}}</div>
+                        </td>
+                        <td>
+                            <div>{{district.r}}</div>
+                        </td>
+                        <td>
+                            <div>{{district.t}}</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </tr>
+    </tbody>
+</table>    

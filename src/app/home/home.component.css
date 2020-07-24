@@ -1,0 +1,11 @@
+h3{
+    text-align-last: center;
+    font-size: xxx-large;
+}
+td{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+td:not(:nth-child(1)){
+    text-align: right;
+}
