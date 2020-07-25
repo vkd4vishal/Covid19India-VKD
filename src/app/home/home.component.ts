@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit {
     var temp=this.stateShow.get(state);
     this.stateShow.set(state,!temp);
   }
-  kaun(state){
+  show(state){
     return this.stateShow.get(state);
   }
 }

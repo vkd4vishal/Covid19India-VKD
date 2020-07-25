@@ -1,6 +1,7 @@
-<h3>{{totalConfirmed}}</h3>
+<div class="main">
+    <h3>{{totalConfirmed}}</h3>
 <table>
-    <thead>
+    <thead class="thead">
         <tr>
             <td>States/UT</td>
             <td>Confirmed</td>
@@ -11,67 +12,62 @@
         </tr>
         <tr>
             <td>Total</td>
-            <td>{{totalConfirmed}}</td>
-            <td> {{totalActive}}</td>
-            <td>{{totalDeath}}</td>
-            <td>{{totalRecovered}}</td>
-            <td>{{totalTested}}</td>
+            <td class="confirmed">{{totalConfirmed}}</td>
+            <td class="active"> {{totalActive}}</td>
+            <td class="death">{{totalDeath}}</td>
+            <td class="recovered">{{totalRecovered}}</td>
+            <td class="tested">{{totalTested}}</td>
         </tr>
 
     </thead>
     <tbody *ngFor='let state of stateCode '>
         <tr>
-            <td (click)="toggle(state.code);">{{state.name}}</td>
-            <td>
+            <td (click)="toggle(state.code);" class="state_name">{{state.name}}</td>
+            <td  class="confirmed">
                 <div>{{stateCases.get(state.code).c}}</div>
             </td>
-            <td>
+            <td class="active">
                 <div>{{stateCases.get(state.code).a}}</div>
             </td>
-            <td>
+            <td class="death">
                 <div>{{stateCases.get(state.code).d}}</div>
             </td>
-            <td>
+            <td class="recovered">
                 <div>{{stateCases.get(state.code).r}}</div>
             </td>
-            <td>
+            <td class="tested">
                 <div>{{stateCases.get(state.code).t}}</div>
             </td>
-            
+
         </tr>
-        <tr>
-            <table *ngIf="kaun(state.code);">
-                <thead>
-                    <tr>
-                        <td>District</td>
-                        <td>Confirmed</td>
-                        <td>Active</td>
-                        <td>Deaths</td>
-                        <td>Recovered</td>
-                        <td>Tested</td>
-                    </tr>
-                </thead>
-                <tbody *ngFor="let district of districtCases.get(state.code)" >
-                    <tr>
-                        <td>{{district.name}}</td>
-                        <td>
-                            <div>{{district.c}}</div>
-                        </td>
-                        <td>
-                            <div>{{district.a}}</div>
-                        </td>
-                        <td>
-                            <div>{{district.d}}</div>
-                        </td>
-                        <td>
-                            <div>{{district.r}}</div>
-                        </td>
-                        <td>
-                            <div>{{district.t}}</div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <tr *ngIf="show(state.code);" class="thead district_head">
+            <td>District</td>
+            <td>Confirmed</td>
+            <td>Active</td>
+            <td>Deaths</td>
+            <td>Recovered</td>
+            <td>Tested</td>
         </tr>
+        <ng-container *ngIf="show(state.code);" >
+            <tr *ngFor="let district of districtCases.get(state.code)">
+                <td class="district_name">{{district.name}}</td>
+                <td class="confirmed">
+                    {{district.c}}
+                </td>
+                <td class="active">
+                    {{district.a}}
+                </td>
+                <td class="death">
+                    {{district.d}}
+                </td>
+                <td class="recovered">
+                    {{district.r}}
+                </td>
+                <td class="tested">
+                    {{district.t}}
+                </td>
+            </tr>
+        </ng-container>
     </tbody>
-</table>    
+</table>
+</div>
