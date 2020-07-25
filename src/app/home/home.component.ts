@@ -18,16 +18,36 @@ export class HomeComponent implements OnInit {
   stateCases = new Map();
   districtCases = new Map();
   stateShow = new Map();
-
+  deltaState=new Map();
   ngOnInit(): void {
     this.__api.getStateCases().subscribe((res: any) => {
       for (const state in res) {
         this.stateShow.set(state.toString(), false);
-
-        // console.log(state)
+        if(res[state].delta == undefined){
+          this.deltaState.set(state.toString(),{c:0,a:0,d:0,r:0});
+        }else{
+          var deltac = res[state].delta.confirmed;
+          if (deltac == undefined)
+          deltac = 0;
+          var deltad = res[state].delta.deceased;
+          if (deltad == undefined)
+          deltad = 0;
+          var deltar = res[state].delta.recovered;
+          if (deltar == undefined)
+          deltar = 0;
+          var deltaa = (deltac - deltar - deltad).toString();
+          deltac = deltac.toString().replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
+          deltad = deltad.toString().replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
+          deltar = deltar.toString().replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
+          deltaa = deltaa.toString().replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
+          this.deltaState.set( state.toString(), { c: deltac, d: deltad, r: deltar, a: deltaa, });
+          // console.log(typeof(deltaa))
+          // console.log(state," ",deltac," ",deltaa," ",deltad," ",deltar)
+          
+        }
         var currentstate = res[state];
         this.districtCases.set(state, []);
-
+        
         for (const dist in currentstate.districts) {
           var tempState = currentstate.districts
           var currentdistrict = tempState[dist];
@@ -57,11 +77,7 @@ export class HomeComponent implements OnInit {
 
         }
 
-
-
-
-
-
+        //getting total cases for the country
         if (state == 'TT') {
           this.totalConfirmed = res[state].total.confirmed.toString().replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
           this.totalDeath = res[state].total.deceased.toString().replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
@@ -101,26 +117,14 @@ export class HomeComponent implements OnInit {
     });
 
   }
-  // poco(){
-  //   alert('h')
-  //   for(const st in this.districtCases){
-  //     // var arr=this.districtCases.get(st);
-  //     // for(var i=0;i<arr.length;i++){
-  //     //   console.log(arr[i].name);
-  //     // }
-  //     console.log(st)
-  //   }
-  //   console.log(this.districtCases.get('UP')[0])
-  // }
   toggle(state) {
-    // console.log(this.stateShow.has(state))
-    // console.log(state.toString())
-    // console.log(this.stateShow[state.toString()])
-    // this.stateShow[state.toString()]=true;
     var temp=this.stateShow.get(state);
     this.stateShow.set(state,!temp);
   }
   show(state){
     return this.stateShow.get(state);
+  }
+  deltaShow(state){
+    console.log(state)
   }
 }
