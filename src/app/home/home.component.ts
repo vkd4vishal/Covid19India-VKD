@@ -1,5 +1,6 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
 import { CovidApiService } from '../covid-api.service';
+import {formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-home',
@@ -9,6 +10,7 @@ import { CovidApiService } from '../covid-api.service';
 export class HomeComponent implements OnInit {
 
   constructor(private __api: CovidApiService) { }
+  currentTime='hola';
   totalConfirmed;
   totalActive;
   totalRecovered;
@@ -25,6 +27,7 @@ export class HomeComponent implements OnInit {
   deltaState=new Map();
   deltaDistrict = new Map();
   ngOnInit(): void {
+    this.currentTime=formatDate(Date.now(), 'dd-MMM hh:mm aa', 'en-US', '+0530');
     this.__api.getStateCases().subscribe((res: any) => {
       for (const state in res) {
         this.stateShow.set(state.toString(), false);
@@ -80,10 +83,10 @@ export class HomeComponent implements OnInit {
                     deltaa = deltaa.toString().replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
                     this.deltaDistrict.set( dist.toString(), { c: deltac, d: deltad, r: deltar, a: deltaa, });
                     // console.log(dist.toString());
-                    console.log(dist.toString(),this.deltaDistrict.get(dist.toString()))
+                    // console.log(dist.toString(),this.deltaDistrict.get(dist.toString()))
                     
                   }//delta district ends here
-          console.log(this.deltaDistrict.get(dist.toString()))
+          // console.log(this.deltaDistrict.get(dist.toString()))
           if (currentdistrict == undefined || currentdistrict.total == undefined)
             continue;
           var c = currentdistrict.total.confirmed;
@@ -148,7 +151,8 @@ export class HomeComponent implements OnInit {
       this.stateCode.shift();//remove first element of statesCode which is "unassigned"
 
     });
-
+    // formatDate(this.Date.now(), 'dd-MM-yyyy hh:mm:ss a', 'en-US', '+0530');
+    
   }
   toggle(state) {
     var temp=this.stateShow.get(state);
@@ -164,4 +168,5 @@ export class HomeComponent implements OnInit {
       document.getElementById(state_code.toString()).style.backgroundColor="#303030";
     }
   }
+ 
 }
