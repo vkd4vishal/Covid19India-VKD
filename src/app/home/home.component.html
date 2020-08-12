@@ -1,5 +1,22 @@
 <div class="main">
+    <span class="top">
+        <div>
+            <p>Confirmed</p>
     <h3>{{totalConfirmed}}</h3>
+        </div>
+    <div>
+        <p>Active</p>
+    <h3>{{totalActive}}</h3>
+    </div>
+    <div>
+        <p>Recovered</p>
+    <h3>{{totalRecovered}}</h3>
+    </div>
+    <div>
+        <p>Deceased</p>
+    <h3>{{totalDeath}}</h3>
+    </div>
+    </span>
     <table>
         <thead class="thead">
             <tr>
@@ -10,23 +27,23 @@
                 <td>Recovered</td>
                 <td>Tested</td>
             </tr>
-            <tr>
+            <tr class="total_delta">
                 <td>Total</td>
                 <td class="confirmed">
-                    <div class="delta" *ngIf="deltaState.get('TT').c != '0'">
-                        +{{deltaState.get('TT').c}}
+                    <div class="delta" *ngIf="delta_totalConfirmed != '0'">
+                        +{{delta_totalConfirmed}}
                     </div>{{totalConfirmed}}</td>
                 <td class="active"> 
-                    <div class="delta" *ngIf="deltaState.get('TT').c != '0'">
-                        +{{deltaState.get('TT').a}}
+                    <div class="delta" *ngIf="delta_totalActive != '0'">
+                        +{{delta_totalActive}}
                     </div>{{totalActive}}</td>
                 <td class="death">
-                    <div class="delta" *ngIf="deltaState.get('TT').c != '0'">
-                        +{{deltaState.get('TT').d}}
+                    <div class="delta" *ngIf="delta_totalDeath != '0'">
+                        +{{delta_totalDeath}}
                     </div>{{totalDeath}}</td>
                 <td class="recovered">
-                    <div class="delta" *ngIf="deltaState.get('TT').c != '0'">
-                        +{{deltaState.get('TT').r}}
+                    <div class="delta" *ngIf="delta_totalRecovered != '0'">
+                        +{{delta_totalRecovered}}
                     </div>{{totalRecovered}}</td>
                 <td class="tested">{{totalTested}}</td>
             </tr>
@@ -34,7 +51,7 @@
         </thead>
         <tbody *ngFor='let state of stateCode '>
             <tr>
-                <td (click)="toggle(state.code);" class="state_name">{{state.name}}</td>
+                <td (click)="toggle(state.code);" class="state_name" [id]="state.code" (click)="activateState(state.code)">{{state.name}}</td>
                 <td class="confirmed">
                     <div class="delta" *ngIf="deltaState.get(state.code).c != '0'">
                         +{{deltaState.get(state.code).c}}
@@ -42,10 +59,6 @@
                     <div>{{stateCases.get(state.code).c}}</div>
                 </td>
                 <td class="active">
-                    <div class="delta" *ngIf="deltaState.get(state.code).a != '0'">
-                        +{{deltaState.get(state.code).a}}
-
-                    </div>
 
                     <div>{{stateCases.get(state.code).a}}</div>
                 </td>
@@ -83,24 +96,29 @@
                 <tr *ngFor="let district of districtCases.get(state.code)">
                     <td class="district_name">{{district.name}}</td>
                     <td class="confirmed">
-                        <div class="delta"></div>
+                        <div class="delta" *ngIf=" deltaDistrict.get(district.name) != undefined && deltaDistrict.get(district.name).c != 0">
+                            +{{deltaDistrict.get(district.name).c}}
+                        </div>
 
-                        {{district.c}}
+                        <div>{{district.c}}</div>
                     </td>
                     <td class="active">
-                        <div class="delta"></div>
 
                         {{district.a}}
                     </td>
-                    <td class="death">
-                        <div class="delta"></div>
+                    <td class="death" >
+                        <div class="delta" *ngIf=" deltaDistrict.get(district.name) != undefined && deltaDistrict.get(district.name).d != 0">
+                            +{{deltaDistrict.get(district.name).d}}
+                        </div>
 
-                        {{district.d}}
+                       <div> {{district.d}}</div>
                     </td>
                     <td class="recovered">
-                        <div class="delta"></div>
+                        <div class="delta" *ngIf=" deltaDistrict.get(district.name) != undefined && deltaDistrict.get(district.name).r != 0">
+                            +{{deltaDistrict.get(district.name).r}}
+                        </div>
 
-                        {{district.r}}
+                        <div>{{district.r}}</div>
                     </td>
                     <td class="tested">
                         <div class="delta"></div>

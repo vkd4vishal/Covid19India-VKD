@@ -6,9 +6,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CovidApiService {
   constructor(private http: HttpClient) { }  
-  getTotalConfirmed(){
-    return this.http.get(`https://api.covid19api.com/dayone/country/india`);
-  }
+  
   getStateCodes(){
     return this.http.get('https://api.covid19india.org/state_district_wise.json');
   }

@@ -2,9 +2,30 @@ h3{
     text-align-last: center;
     font-size: xxx-large;
     color: yellowgreen;
+    margin-top: 0;
+}
+.top{
+    display: flex;
+    place-content: center;
+}
+.top div{
+    padding-right: 100px;
+    
+}
+p{
+    color: aqua;
+    text-align: center;
 }
 td{
-    padding: 5px;
+    
+    padding-top: 10px;
+    padding-right: 7px;
+
+}
+td:nth-child(1){
+    width: 100px;
+    word-wrap: break-word;
+    background-color: #383737c4;
 }
 td:not(:nth-child(1)){
     text-align: right;
@@ -21,14 +42,13 @@ table{
     padding-top: 30px;
     color: gainsboro;
 }
-.main{
-    background-color: #303030;
-}
+
 .state_name{
     color: cadetblue;
 }
+
 .confirmed{
-    color: rgb(243, 61, 61);
+    color: rgb(89, 231, 23);
 }
 .active{
     color: cornflowerblue;
@@ -50,4 +70,8 @@ table{
 {
     font-size: smaller;
     color: white;
+    font-style: italic;
+}
+.total_delta{
+    font-size: medium;
 }
